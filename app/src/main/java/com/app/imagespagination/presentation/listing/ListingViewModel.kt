@@ -1,4 +1,4 @@
-package com.app.imagespagination
+package com.app.imagespagination.presentation.listing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val paging: MoviePagingSource) : ViewModel() {
+class ListingViewModel @Inject constructor(private val paging: MoviePagingSource) : ViewModel() {
 
     fun getListData(): Flow<PagingData<ImageEntity>> {
         return Pager(config = PagingConfig(pageSize = 20, maxSize = 200),
