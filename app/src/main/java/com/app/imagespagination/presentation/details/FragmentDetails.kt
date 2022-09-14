@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 
 class FragmentDetails : Fragment() {
 
-    val args: FragmentDetailsArgs by navArgs()
+    private val args: FragmentDetailsArgs by navArgs()
 
     private var _binding: FragmentDetailsBinding? = null
 
