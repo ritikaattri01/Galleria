@@ -11,13 +11,24 @@
         android:label="fragment_listing">
         <action
             android:id="@+id/action_listingFragment_to_detailsFragment"
-            app:destination="@+id/detailsFragment" />
+            app:destination="@+id/detailsFragment" >
+        <argument
+            android:name="data"
+            app:argType="com.app.imagespagination.data.local.ImageEntity"
+            app:nullable="true"
+             />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.app.imagespagination.presentation.details.FragmentDetails"
         android:label="fragment_details">
+        <argument
+            android:name="data"
+            app:argType="com.app.imagespagination.data.local.ImageEntity"
+            app:nullable="true"
+            />
         <action
             android:id="@+id/action_detailsFragment_to_listingFragment"
             app:destination="@+id/listingFragment" />

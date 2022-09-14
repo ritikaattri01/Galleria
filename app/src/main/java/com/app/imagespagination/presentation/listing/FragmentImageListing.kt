@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.app.imagespagination.databinding.FragmentImageListingBinding
 import com.app.imagespagination.presentation.adapter.ImagesAdapter
@@ -22,7 +23,7 @@ class FragmentImageListing : Fragment() {
     private val viewModel: ListingViewModel by viewModels()
 
     private val imagesAdapter: ImagesAdapter by lazy {
-        ImagesAdapter()
+        ImagesAdapter(onImageClicked = { navigateTo(FragmentImageListingDirections.actionListingFragmentToDetailsFragment(it)) })
     }
 
     private var _binding: FragmentImageListingBinding? = null
@@ -50,6 +51,12 @@ class FragmentImageListing : Fragment() {
     }
 
     private fun observe() {
+        lifecycleScope.launchWhenCreated {
+            imagesAdapter.loadStateFlow.collect { loadStates ->
+                binding.swipeRefresh.isRefreshing =
+                    loadStates.mediator?.refresh is LoadState.Loading
+            }
+        }
         lifecycleScope.launch {
             viewModel.getListData().collectLatest {
                 imagesAdapter.submitData(it)

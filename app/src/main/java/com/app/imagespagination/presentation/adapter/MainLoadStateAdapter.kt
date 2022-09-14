@@ -1,4 +1,4 @@
-package com.app.paginatedimages.presentation.ui.listing.adapter
+package com.app.imagespagination.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
