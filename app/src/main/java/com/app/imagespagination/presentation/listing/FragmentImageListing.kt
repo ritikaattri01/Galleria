@@ -51,12 +51,6 @@ class FragmentImageListing : Fragment() {
     }
 
     private fun observe() {
-        lifecycleScope.launchWhenCreated {
-            imagesAdapter.loadStateFlow.collect { loadStates ->
-                binding.swipeRefresh.isRefreshing =
-                    loadStates.mediator?.refresh is LoadState.Loading
-            }
-        }
         lifecycleScope.launch {
             viewModel.getListData().collectLatest {
                 imagesAdapter.submitData(it)
