@@ -10,7 +10,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 
-class MoviePagingSource @Inject constructor(
+class ImagesPagingSource @Inject constructor(
     private val repo: ImageRepositoryImpl,
 ) :
     PagingSource<Int, ImageEntity>() {

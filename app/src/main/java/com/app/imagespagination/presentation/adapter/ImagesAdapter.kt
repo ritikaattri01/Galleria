@@ -13,7 +13,7 @@ class ImagesAdapter : PagingDataAdapter<ImageEntity, ImagesAdapter.MainViewHolde
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ImageEntity>() {
             override fun areItemsTheSame(oldItem: ImageEntity, newItem: ImageEntity): Boolean =
-                oldItem == newItem
+                oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: ImageEntity, newItem: ImageEntity): Boolean =
                 oldItem == newItem
