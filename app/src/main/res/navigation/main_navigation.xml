@@ -20,7 +20,7 @@
         </action>
     </fragment>
 
-    <fragment
+    <dialog
         android:id="@+id/detailsFragment"
         android:name="com.app.imagespagination.presentation.details.FragmentDetails"
         android:label="fragment_details">
@@ -32,6 +32,6 @@
         <action
             android:id="@+id/action_detailsFragment_to_listingFragment"
             app:destination="@+id/listingFragment" />
-    </fragment>
+    </dialog>
 
 </navigation>
