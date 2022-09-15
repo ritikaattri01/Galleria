@@ -16,8 +16,6 @@ class ListingViewModel @Inject constructor(private val repo: ImageRepository) : 
 
     var pageNo = Constants.STARTING_PAGE
 
-    val images = repo.images
-
     fun fetchList(): LiveData<List<ImageEntity>> {
         fetch()
         return repo.getImages(pageNo)

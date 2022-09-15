@@ -18,6 +18,4 @@ interface ImageDao {
     @Query("DELETE FROM images")
     suspend fun clearAll()
 
-    @Query("Select count(*) from images")
-    fun items(): LiveData<Int>
 }

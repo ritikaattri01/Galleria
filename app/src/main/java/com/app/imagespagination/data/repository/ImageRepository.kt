@@ -12,13 +12,10 @@ import javax.inject.Singleton
 
 @Singleton
 class ImageRepository @Inject constructor(
-    @ApplicationContext private val context: Context,
     db: AppDatabase,
     private val api: ImagesService
 ) {
     private val userDb = db.imageDao
-
-    val images = userDb.items()
 
     fun getImages(page: Int) = userDb.getImages(page * NETWORK_PAGE_SIZE, 0)
 
@@ -32,12 +29,5 @@ class ImageRepository @Inject constructor(
         if (response.isSuccessful && response.body() != null) {
             userDb.insertAll(response.body())
         }
-    }
-
-    private fun isNetworkAvailable(): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!
-            .isConnected
     }
 }

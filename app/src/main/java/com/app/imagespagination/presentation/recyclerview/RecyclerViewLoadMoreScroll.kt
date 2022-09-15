@@ -9,14 +9,15 @@ interface OnLoadMoreListener {
     fun onLoadMore()
 }
 
-class RecyclerViewLoadMoreScroll : RecyclerView.OnScrollListener {
+class RecyclerViewLoadMoreScroll(layoutManager: StaggeredGridLayoutManager) :
+    RecyclerView.OnScrollListener() {
 
     private var visibleThreshold = 5
     private lateinit var mOnLoadMoreListener: OnLoadMoreListener
     private var isLoading: Boolean = false
     private var lastVisibleItem: Int = 0
     private var totalItemCount: Int = 0
-    private var mLayoutManager: RecyclerView.LayoutManager
+    private var mLayoutManager: RecyclerView.LayoutManager = layoutManager
 
     fun setLoaded() {
         isLoading = false
@@ -26,20 +27,9 @@ class RecyclerViewLoadMoreScroll : RecyclerView.OnScrollListener {
         this.mOnLoadMoreListener = mOnLoadMoreListener
     }
 
-    constructor(layoutManager: LinearLayoutManager) {
-        this.mLayoutManager = layoutManager
-    }
-
-    constructor(layoutManager: GridLayoutManager) {
-        this.mLayoutManager = layoutManager
+    init {
         visibleThreshold *= layoutManager.spanCount
     }
-
-    constructor(layoutManager: StaggeredGridLayoutManager) {
-        this.mLayoutManager = layoutManager
-        visibleThreshold *= layoutManager.spanCount
-    }
-
 
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
@@ -47,17 +37,10 @@ class RecyclerViewLoadMoreScroll : RecyclerView.OnScrollListener {
         if (dy <= 0) return
 
         totalItemCount = mLayoutManager.itemCount
-
-        if (mLayoutManager is StaggeredGridLayoutManager) {
             val lastVisibleItemPositions =
                 (mLayoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
             // get maximum element within the list
             lastVisibleItem = getLastVisibleItem(lastVisibleItemPositions)
-        } else if (mLayoutManager is GridLayoutManager) {
-            lastVisibleItem = (mLayoutManager as GridLayoutManager).findLastVisibleItemPosition()
-        } else if (mLayoutManager is LinearLayoutManager) {
-            lastVisibleItem = (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-        }
 
         if (!isLoading && totalItemCount <= lastVisibleItem + visibleThreshold) {
             mOnLoadMoreListener.onLoadMore()
